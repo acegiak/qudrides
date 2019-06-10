@@ -7,22 +7,22 @@
     <part Name="Physics" Weight="215" />
     <part Name="Description" Short="Garish colours and patterns flake away to reveal the rusted steel skeleton beneath. Your mind calls you to ride it, as if you always knew how." />
     <part Name="BootSequence" BootTime="3" VerbOnBootInitialized="cough" VerbOnBootAborted="sputter" VerbOnBootDone="fwoosh" ObviousIfUnderstood="true" IsEMPSensitive="false" />
-    <!-- <part Name="acegiak_GasGasGas" ChargeUse="1" IsEMPSensitive="false" IsBootSensitive="true" WorksOnWearer="true" PlumeLevel="3" /> -->
+    <part Name="acegiak_MotorProp" ChargeUse="1" IsEMPSensitive="false" IsBootSensitive="true" WorksOnWearer="true" PlumeLevel="3" />
     <part Name="SaveModifier" Vs="Move,Knockdown,Knockback,Restraint,Drag" Amount="-4" IsTechScannable="true" NameForStatus="DriveTrain" />
-    <part Name="LiquidFueledPowerPlant" Liquid="oil" ChargePerDram="750" />
+    <part Name="LiquidFueledPowerPlant" Liquid="oil" ChargePerDram="50" />
     <part Name="TemperatureAdjuster" ChargeUse="1" IsEMPSensitive="false" IsBootSensitive="true" TemperatureAmount="10" TemperatureThreshold="100" ThresholdAbove="true" AlwaysUseCharge="true" WorksOnSelf="true" WorksOnWearer="true" WorksOnCarrier="false" WorksOnCellContents="true" WorksOnAdjacentCellContents="true" NeedsOtherActivePartOperational="RocketSkates" NameForStatus="EmissionsControl" BehaviorDescription="Heats up the area around the wearer when in operation." />
     <part Name="LiquidVolume" MaxVolume="32" Volume="0" StartVolume="0-32" InitialLiquid="oil-1000" />
     <part Name="Metal" />
-    <stat Name="MoveSpeed" ShortName="MS" Min="-2000" Max="2000" Value="500" />
+    <stat Name="MoveSpeed" ShortName="MS" Min="-2000" Max="2000" Value="200" />
     <stat Name="Strength" ShortName="ST" Min="1" Max="9000" Value="20" />
     <part Name="Examiner" Complexity="4" Difficulty="1" />
     <part Name="TinkerItem" Bits="0025" CanDisassemble="true" CanBuild="true" CanRepair="true" />
     <property Name="Role" Value="Uncommon" />
     <tag Name="Tier" Value="5" />
   </object>
-<!-- <object Name="Velocipede" Inherits="Item">
-    <part Name="acegiak_Ridable" AltTile="Items/AutocycleRidden.png"/>
-    <part Name="Render" DisplayName="velocipede" RenderString="]" Tile="Items/Autocycle.png" ColorString="&amp;C" DetailColor="K" />
+<object Name="Velocipede" Inherits="Item">
+    <part Name="acegiak_Ridable" AltTile="Items/velocipedeRidden.png"/>
+    <part Name="Render" DisplayName="velocipede" RenderString="]" Tile="Items/velocipede.png" ColorString="&amp;C" DetailColor="K" />
     <part Name="Commerce" Value="250" />
     <part Name="Physics" Weight="20" />
     <part Name="Description" Short="A contraption of struts and wheels to enhance the natural travel aptitudes of the body." />
@@ -33,7 +33,7 @@
     <part Name="TinkerItem" Bits="0005" CanDisassemble="true" CanBuild="true" CanRepair="true" />
     <property Name="Role" Value="Uncommon" />
     <tag Name="Tier" Value="3" />
-  </object> -->
+  </object>
 
   <object Name="Creature" Load="Merge">
     <part Name="acegiak_Rider"/>
