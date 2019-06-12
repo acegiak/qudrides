@@ -73,10 +73,12 @@ namespace XRL.World.Parts
 		}
 
         public bool GasCheck(){
+			if(!Ability.ToggleState){
+				return false;
+			}
             if(!IsReady(UseCharge: true)){
-                if(Ability.ToggleState){
-                    IPart.AddPlayerMessage(ParentObject.The+ParentObject.DisplayNameOnly+" sputters and stalls.");
-                }
+                IPart.AddPlayerMessage(ParentObject.The+ParentObject.DisplayNameOnly+" sputters and stalls.");
+                
                 Ability.ToggleState = false;
             }
             return Ability.ToggleState;
@@ -150,7 +152,7 @@ namespace XRL.World.Parts
 			}
 			if (E.ID == "EndTurn")
 			{
-				if (IsReady(UseCharge: true))
+				if (Ability.ToggleState)
 				{
 					ParentObject.pPhysics.Equipped.Smoke();
 				}

@@ -69,12 +69,15 @@ namespace XRL.World.Parts
             }
         }
 
-		// public void ChanceToFall(int chance){
-		// 	if (Stat.Random(1, 100) <= chance)
-		// 			{
-
-		// 			}
-		// }
+		public void ChanceToFall(GameObject rider, int chance){
+			if (Stat.Rnd2.Next(0, 101) <= chance)
+			{
+				if(rider.IsPlayer()){
+					IPart.AddPlayerMessage("You fall from "+ParentObject.the+ParentObject.DisplayNameOnly);
+				}
+				Dismount(rider);
+			}
+		}
 
         public override bool FireEvent(Event E)
 		{
@@ -140,6 +143,27 @@ namespace XRL.World.Parts
                 XRLCore.Core.Game.ActionManager.AddActiveObject(ParentObject);
 
             }
+            if (E.ID == "TakeDamage")
+            {
+                
+                GameObject rider = ParentObject.pPhysics.Equipped;
+				if(rider != null){
+					Damage damage = E.GetParameter("Damage") as Damage;
+					ChanceToFall(rider,damage.Amount);
+				}
+
+
+            }
+			if (E.ID == "Equipped")
+			{
+				GameObject gameObjectParameter = E.GetGameObjectParameter("EquippingObject");
+				gameObjectParameter.RegisterPartEvent(this, "TakeDamage");
+			}
+			if (E.ID == "Unequipped")
+			{
+				GameObject gameObjectParameter2 = E.GetGameObjectParameter("UnequippingObject");
+				gameObjectParameter2.RegisterPartEvent(this, "TakeDamage");
+			}
 
 			// if(E.ID == 	Object.RegisterPartEvent(this, "TakeDamage")){
 			// 	Damage damage = E.GetParameter("Damage") as Damage;
