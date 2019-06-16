@@ -1,0 +1,61 @@
+  <encountertables>
+    <encountertable Name="Utility 2" Load="Merge">
+        <objects>
+        <object Chance="20" Number="1d1" Blueprint="FishingRod"></object>
+        </objects>
+    </encountertable>
+    
+    <encountertable Name="Artifact 0R" Load="Merge">
+        <objects>
+        <object Chance="1" Number="1d1" Blueprint="Autocycle"></object>
+        <object Chance="1" Number="1d1" Blueprint="Velocipede"></object>
+        </objects>
+    </encountertable>
+    
+    <encountertable Name="Artifact 1R" Load="Merge">
+        <objects>
+        <object Chance="1" Number="1d1" Blueprint="Autocycle"></object>
+        <object Chance="1" Number="1d1" Blueprint="Velocipede"></object>
+        </objects>
+    </encountertable>
+    
+    <encountertable Name="Artifact 2R" Load="Merge">
+        <objects>
+        <object Chance="1" Number="1d1" Blueprint="Autocycle"></object>
+        <object Chance="5" Number="1d1" Blueprint="Velocipede"></object>
+        </objects>
+    </encountertable>
+
+    <encountertable Name="Artifact 3R" Load="Merge">
+        <objects>
+        <object Chance="4" Number="1d1" Blueprint="Autocycle"></object>
+        <object Chance="10" Number="1d1" Blueprint="Velocipede"></object>
+        </objects>
+    </encountertable>
+
+    <encountertable Name="Artifact 4R" Load="Merge">
+        <objects>
+        <object Chance="10" Number="1d1" Blueprint="Autocycle"></object>
+        <object Chance="20" Number="1d1" Blueprint="Velocipede"></object>
+        </objects>
+    </encountertable>
+
+    <encountertable Name="Artifact 5R" Load="Merge">
+        <objects>
+        <object Chance="10" Number="1d1" Blueprint="Autocycle"></object>
+        </objects>
+    </encountertable>
+
+    <encountertable Name="Artifact 6R" Load="Merge">
+        <objects>
+        <object Chance="10" Number="1d1" Blueprint="Autocycle"></object>
+        </objects>
+    </encountertable>
+
+    <encountertable Name="Artifact 7R" Load="Merge">
+        <objects>
+        <object Chance="5" Number="1d1" Blueprint="Autocycle"></object>
+        </objects>
+    </encountertable>
+
+  </encountertables>

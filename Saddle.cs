@@ -26,24 +26,28 @@ namespace XRL.World.Parts
 			Object.RegisterPartEvent(this, "Equipped");
 			Object.RegisterPartEvent(this, "Unequipped");
 			Object.RegisterPartEvent(this, "GetInventoryActions");
+			// Object.RegisterPartEvent(this, "AddedToInventory");
+			// Object.RegisterPartEvent(this, "Dropped");
 			Object.RegisterPartEvent(this, "InvCommandHarness");
+			Object.RegisterPartEvent(this, "ProjectileHit");
+			Object.RegisterPartEvent(this, "ThrownProjectileHit");
+			Object.RegisterPartEvent(this, "WeaponAfterDamage");
 			base.Register(Object);
 		}
         public void Harness(GameObject harnesser,GameObject harnessee){
+			IPart.AddPlayerMessage(harnesser.It+harnesser.GetVerb("attempt")+" to harness "+harnessee.the+harnessee.ShortDisplayName+" with the saddle!");
+
 			if (harnessee.pBrain != null)
 			{
 				harnessee.pBrain.AdjustFeeling(harnesser, -100);
 			}
-            if(harnessee.MakeSave("Strength", 20, harnesser, null, "Saddle Harness")){
+            if(harnessee.MakeSave("Strength", 8, harnesser, "Strength", "Saddle Harness")){
 				IPart.AddPlayerMessage(harnessee.The+harnessee.ShortDisplayName+harnessee.GetVerb("avoid")+" the saddle harness!");
 			}else{
 
-				Event @event = Event.New("CommandForceEquipObject");
-				@event.AddParameter("Object", this);
-				@event.AddParameter("BodyPart", "back");
-				@event.SetSilent(Silent: true);
-				ParentObject.FireEvent(@event);
-				IPart.AddPlayerMessage(harnesser.It+harnesser.GetVerb("harness")+harnessee.the+harnessee.ShortDisplayName+" with the saddle!");
+				ParentObject.ForceUnequipAndRemove(true);
+				harnessee.ForceEquipObject(ParentObject,"Riding",true);
+				IPart.AddPlayerMessage(harnesser.It+harnesser.GetVerb("harness")+" "+harnessee.the+harnessee.ShortDisplayName+" with the saddle!");
 
 			}
 
@@ -67,37 +71,44 @@ namespace XRL.World.Parts
 				GameObject GO = E.GetGameObjectParameter("UnequippingObject");;
                 GO.RemovePart<acegiak_Ridable>();
 			}
-			else if (E.ID == "GetInventoryActions")
-			{
-				//E.GetParameter<EventParameterGetInventoryActions>("Actions").AddAction("Harness", 'm',  true, "&Wh&yarness a creature", "InvCommandHarness", 10);
+			// else if (E.ID == "GetInventoryActions")
+			// {
+			// 	E.GetParameter<EventParameterGetInventoryActions>("Actions").AddAction("Harness", 'H',  true, "&WH&yarness a creature", "InvCommandHarness", 10);
                 
+			// }
+			// else if (E.ID == "Dropped")
+			// {
+			// 	GameObject taking = E.GetGameObjectParameter("DroppingObject");
+			// 	taking.UnregisterPartEvent(this,"InvCommandHarness");
+			// }
+			// else if (E.ID == "AddedToInventory")
+			// {
+			// 	GameObject taking = E.GetGameObjectParameter("TakingObject");
+			// 	taking.RegisterPartEvent(this,"InvCommandHarness");
+			// }
+
+
+			if (E.ID == "ProjectileHit" || E.ID == "ThrownProjectileHit" || E.ID == "WeaponAfterDamage")
+			{
+				GameObject defender = E.GetGameObjectParameter("Defender");
+				GameObject attacker = E.GetGameObjectParameter("Attacker");
+				if (E.GetIntParameter("Penetrations", 0) > 0 && !IsBroken() && !IsRusted())
+				{
+					if (defender != null && defender.baseHitpoints >= 1)
+					{
+						ParentObject.FireEvent(Event.New("InvCommandHarness", "Owner", defender, "Attacker", attacker));
+					}
+				}
 			}
+
 			if (E.ID == "InvCommandHarness")
 			{
-				if (ParentObject.pPhysics != null && ParentObject.pPhysics.IsFrozen())
-				{
-					if (ParentObject.IsPlayer())
-					{
-						Popup.Show("You are frozen solid!");
-					}
-				}
-				else
-				{
-					string text = PickDirectionS();
-					if (!string.IsNullOrEmpty(text))
-					{
-						Cell cellFromDirection = ParentObject.pPhysics.CurrentCell.GetCellFromDirection(text);
-						if (cellFromDirection != null)
-						{
-							GameObject combatTarget = cellFromDirection.GetCombatTarget(ParentObject);
-							if (combatTarget != null && combatTarget != ParentObject)
-							{
-                				Harness(E.GetGameObjectParameter("Owner"),combatTarget);
-							}
-						}
-					}
-				}
-				E.RequestInterfaceExit();
+				GameObject defender = E.GetGameObjectParameter("Owner");
+				GameObject attacker = E.GetGameObjectParameter("Attacker");
+				
+				Harness(attacker,defender);
+				
+				
 			}
 			return base.FireEvent(E);
 		}

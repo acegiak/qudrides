@@ -157,7 +157,12 @@ namespace XRL.World.Parts
 			if (E.ID == "Equipped")
 			{
 				GameObject gameObjectParameter = E.GetGameObjectParameter("EquippingObject");
-				gameObjectParameter.RegisterPartEvent(this, "TakeDamage");
+				BodyPart part = E.GetParameter("EquippingObject") as BodyPart;
+				if(part.Type=="Riding"){
+					IPart.AddPlayerMessage("Riding!");
+					gameObjectParameter.RegisterPartEvent(this, "TakeDamage");
+
+				}
 			}
 			if (E.ID == "Unequipped")
 			{
