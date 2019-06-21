@@ -4,6 +4,7 @@ using XRL.Rules;
 using XRL.UI;
 using XRL.Core;
 using XRL.World.Capabilities;
+using System.Collections.Generic;
 namespace XRL.World.Parts
 {
 	[Serializable]
@@ -103,6 +104,7 @@ namespace XRL.World.Parts
 					IPart.AddPlayerMessage("You fall from "+mount.the+mount.DisplayNameOnly);
 				}
 				Dismount(rider);
+				rider.ApplyEffect(new Prone());
 			}
 		}
 
