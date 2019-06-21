@@ -3,6 +3,7 @@ using System;
 using XRL.Rules;
 using XRL.UI;
 using XRL.Core;
+using XRL.World.Capabilities;
 namespace XRL.World.Parts
 {
 	[Serializable]
@@ -37,7 +38,8 @@ namespace XRL.World.Parts
 			Object.RegisterPartEvent(this, "Dropped");
 			Object.RegisterPartEvent(this, "EnteredCell");
 			Object.RegisterPartEvent(this, "CommandAttack");
-			Object.RegisterPartEvent(this, "TakeDamage");
+			Object.RegisterPartEvent(this, "Equipped");
+			Object.RegisterPartEvent(this, "Unequipped");
 			base.Register(Object);
 		}
 
@@ -71,9 +73,31 @@ namespace XRL.World.Parts
 
 		public void ChanceToFall(GameObject rider, float chance, GameObject mount){
 			if(mount.GetPart<Brain>() != null){
+				float feeling = mount.GetPart<Brain>().GetFeeling(rider);
+				chance += (feeling*-1)*0.01f;
+				int? difference = DifficultyEvaluation.GetDifficultyRating(mount,rider);
+				if(difference == null){
+					difference = 0;
+				}
+				chance += (difference*0.01f).GetValueOrDefault(0f);
 
+				if(rider.GetPart<Body>() != null){
+					List<BodyPart> parts = rider.GetPart<Body>().GetParts();
+					float limblessfall = 10f;
+					foreach(BodyPart part in parts){
+						if(part.Type == "Arm" ||
+						part.Type == "Feet" ||
+						part.Type == "Tail"){
+							limblessfall= limblessfall/10f;
+						}
+					}
+					chance += limblessfall;
+				}
 			}
-			if (Stat.Rnd2.NextDouble()*100 <= chance)
+
+			Double roll = Stat.Rnd2.NextDouble()*100;
+			//IPart.AddPlayerMessage("fall?"+roll.ToString()+"/"+chance.ToString());
+			if ( roll <= chance)
 			{
 				if(rider.IsPlayer()){
 					IPart.AddPlayerMessage("You fall from "+mount.the+mount.DisplayNameOnly);
@@ -136,14 +160,22 @@ namespace XRL.World.Parts
                 boot = true;
             }
   
-            if (E.ID == "EnteredCell" && boot)
+            if (E.ID == "EnteredCell" )
             {
-                boot = false;
-                if(ParentObject.GetPart<Brain>() == null){
-                    return false;
-                }
+				if(boot){
 
-                XRLCore.Core.Game.ActionManager.AddActiveObject(ParentObject);
+					boot = false;
+					if(ParentObject.GetPart<Brain>() == null){
+						return false;
+					}
+
+					XRLCore.Core.Game.ActionManager.AddActiveObject(ParentObject);
+				}
+				GameObject rider = ParentObject.pPhysics.Equipped;
+
+				if(rider != null){
+					ChanceToFall(rider,0.1f, ParentObject);
+				}
 
             }
             if (E.ID == "TakeDamage")
@@ -155,22 +187,18 @@ namespace XRL.World.Parts
 					ChanceToFall(rider,damage.Amount, ParentObject);
 				}
             }
-            if (E.ID == "CellChanged")
-            {
-                
-                GameObject rider = ParentObject.pPhysics.Equipped;
-				if(rider != null){
-					ChanceToFall(rider,0.1f, ParentObject);
-				}
-            }
 			if (E.ID == "Equipped")
 			{
 				GameObject gameObjectParameter = E.GetGameObjectParameter("EquippingObject");
-				BodyPart part = E.GetParameter("EquippingObject") as BodyPart;
-				if(part.Type=="Riding"){
-					IPart.AddPlayerMessage("Riding!");
+				string Type = E.GetStringParameter("SlotType");
+				BodyPart bp = E.GetParameter("BodyPart") as BodyPart;
+				if(bp != null){Type = bp.Type;}
+				//IPart.AddPlayerMessage("slot: "+Type);
+				if(Type=="Riding"){
+					//IPart.AddPlayerMessage("Riding!");
 					gameObjectParameter.RegisterPartEvent(this, "TakeDamage");
 					gameObjectParameter.RegisterPartEvent(this, "CellChanged");
+					gameObjectParameter.RegisterPartEvent(this, "EnteredCell");
 
 				}
 			}
@@ -179,6 +207,7 @@ namespace XRL.World.Parts
 				GameObject gameObjectParameter2 = E.GetGameObjectParameter("UnequippingObject");
 				gameObjectParameter2.UnregisterPartEvent(this, "TakeDamage");
 				gameObjectParameter2.UnregisterPartEvent(this, "CellChanged");
+				gameObjectParameter2.UnregisterPartEvent(this, "EnteredCell");
 			}
 
 			// if(E.ID == 	Object.RegisterPartEvent(this, "TakeDamage")){

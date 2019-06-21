@@ -49,6 +49,7 @@ namespace XRL.World.Parts
 				harnessee.ForceEquipObject(ParentObject,"Riding",true);
 				IPart.AddPlayerMessage(harnesser.It+harnesser.GetVerb("harness")+" "+harnessee.the+harnessee.ShortDisplayName+" with the saddle!");
 
+				harnessee.ParticleText("*"+harnessee.ShortDisplayName + " Harnessed*");
 			}
 
         }
