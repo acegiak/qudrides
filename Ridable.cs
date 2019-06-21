@@ -5,6 +5,7 @@ using XRL.UI;
 using XRL.Core;
 using XRL.World.Capabilities;
 using System.Collections.Generic;
+using XRL.World.Parts.Effects;
 namespace XRL.World.Parts
 {
 	[Serializable]
