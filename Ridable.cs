@@ -31,7 +31,6 @@ namespace XRL.World.Parts
 		public override void Register(GameObject Object)
 		{
 			Object.RegisterPartEvent(this, "CommandSmartUse");
-			Object.RegisterPartEvent(this, "CanHaveSmartUseConversation");
 			Object.RegisterPartEvent(this, "CanSmartUse");
 			Object.RegisterPartEvent(this, "GetInventoryActions");
 			Object.RegisterPartEvent(this, "InvCommandMount");

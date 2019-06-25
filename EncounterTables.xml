@@ -1,9 +1,5 @@
   <encountertables>
-    <encountertable Name="Utility 2" Load="Merge">
-        <objects>
-        <object Chance="20" Number="1d1" Blueprint="FishingRod"></object>
-        </objects>
-    </encountertable>
+
     
     <encountertable Name="Artifact 0R" Load="Merge">
         <objects>
