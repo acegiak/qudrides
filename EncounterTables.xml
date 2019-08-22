@@ -1,5 +1,10 @@
   <encountertables>
 
+    <encountertable Name="Utility 2" Density="minimum">
+        <objects>
+          <object Chance="10" Number="1d1" Blueprint="Saddle"></object>
+        </objects>
+    </encountertable>
     
     <encountertable Name="Artifact 0R" Load="Merge">
         <objects>
