@@ -22,7 +22,7 @@ namespace XRL.World.Parts
 
         public void AddBodyPart(){
             
-			BodyPartType.Make("Riding", null, "riding", null, null, null, null, null, null, null, null, null, false, true);
+			//BodyPartType.Make("Riding", null, "riding", null, null, null, null, null, null, null, null, null, false, true);
             
             Body part = ParentObject.GetPart<Body>();
 			if (part != null)

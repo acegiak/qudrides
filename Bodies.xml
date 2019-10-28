@@ -1,0 +1,5 @@
+<bodies>
+    <bodyparttypes>
+        <bodyparttype Type="Riding" Abstract="true"/>
+    </bodyparttypes>
+</bodies>
