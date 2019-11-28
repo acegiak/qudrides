@@ -32,7 +32,7 @@ namespace XRL.World.Parts
 
             if (pAA != null)
             {
-                ActivatedAbilityID = pAA.AddAbility("Hit The Gas", "CommandAcegiakGasGasGas", "Maneuvers", -1, true, true, "While gassing it you move 2-4 spaces each turn.", "-");
+                ActivatedAbilityID = pAA.AddAbility("Hit The Gas", "CommandAcegiakGasGasGas", "Maneuvers", -1,  "While gassing it you move 2-4 spaces each turn.", "-");
                 Ability = pAA.AbilityByGuid[ActivatedAbilityID];
             }
 
