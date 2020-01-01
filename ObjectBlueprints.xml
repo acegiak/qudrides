@@ -43,6 +43,8 @@
     <part Name="Render" DisplayName="saddle" RenderString="]" Tile="Items/Saddle.png" ColorString="&amp;w" DetailColor="W"/>
     <part Name="Armor" AV="0" DV="1" WornOn="Back"></part>
     <part Name="acegiak_Saddle"  AltTile="Items/Riding.png"/>
+    <part Name="Commerce" Value="12" />
+
   </object>
 
 
