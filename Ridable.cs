@@ -60,23 +60,6 @@ namespace XRL.World.Parts
             }else{
                 rider.Statistics["MoveSpeed"].Penalty += -SavedSpeed;
             }
-			Cell currentcell = new Cell();
-			List<Cell> allcells = new List<ConsoleColor>();
-			List<Cell> seen = new List<Cell>();
-			List<Cell> adjacent = new List<Cell>();
-			while(adjacent.Count < 8){
-				Cell candidate = allcells[(int)Math.Floor(new Random().NextDouble()*allcells.Count)];
-				if(!seen.Contains(candidate)){
-					if(currentcell.x - candidate.x <= 1
-					&& currentcell.x - candidate.x >= -1
-					&& currentcell.y - candidate.y >= -1
-					&& currentcell.y - candidate.y <= 1
-					&& currentcell != candidate){
-						adjacent.Add(candidate);
-					}
-					seen.Add(currentcell);
-				}
-			}
 
 
         }
