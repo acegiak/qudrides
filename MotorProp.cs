@@ -2,7 +2,7 @@ using System;
 using System.Text;
 using XRL.Core;
 using XRL.Rules;
-using XRL.World.Parts.Effects;
+using XRL.World.Effects;
 using XRL.World.Parts.Mutation;
 using XRL.World.Parts.Skill;
 using System.Collections.Generic;
@@ -32,7 +32,7 @@ namespace XRL.World.Parts
 
             if (pAA != null)
             {
-                ActivatedAbilityID = pAA.AddAbility("Hit The Gas", "CommandAcegiakGasGasGas", "Maneuvers", -1,  "While gassing it you move 2-4 spaces each turn.", "-");
+                ActivatedAbilityID = pAA.AddAbility("Hit The Gas", "CommandAcegiakGasGasGas", "Maneuvers", "While gassing it you move 2-4 spaces each turn.", "-");
                 Ability = pAA.AbilityByGuid[ActivatedAbilityID];
             }
 
@@ -115,7 +115,6 @@ namespace XRL.World.Parts
 
                 if(source != "Gas"){
 
-                    int num3 = 10;
                     GameObject riderObject = ParentObject.pPhysics.Equipped;
 					string text3 = riderObject.pRender.Tile;
 

@@ -5,7 +5,7 @@ using XRL.UI;
 using XRL.Core;
 using XRL.World.Capabilities;
 using System.Collections.Generic;
-using XRL.World.Parts.Effects;
+using XRL.World.Effects;
 namespace XRL.World.Parts
 {
 	[Serializable]
@@ -135,9 +135,9 @@ namespace XRL.World.Parts
 			else if (E.ID == "GetInventoryActions")
 			{
                 if(ParentObject.Equipped != null){
-				    E.GetParameter<EventParameterGetInventoryActions>("Actions").AddAction("Dismount", 'm',  false, "dis&Wm&yount", "InvCommandDismount", 10);
+				    E.GetParameter<EventParameterGetInventoryActions>("Actions").AddAction("Dismount", 'm',  false, "dis&Wm&yount", "InvCommandDismount", null, 10);
                 }else{
-				    E.GetParameter<EventParameterGetInventoryActions>("Actions").AddAction("Mount", 'm', false, "&Wm&yount", "InvCommandMount", 10);
+				    E.GetParameter<EventParameterGetInventoryActions>("Actions").AddAction("Mount", 'm', false, "&Wm&yount", "InvCommandMount", null, 10);
                 }
 			}
 			if (E.ID == "InvCommandMount")
